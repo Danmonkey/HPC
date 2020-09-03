@@ -68,5 +68,5 @@ int main()
     Matt.print_me();
     cout << "Solving for values..." << endl;
     Matt.solve(); // standardizes matrix such that each row is solved for its key value. I.E. the primary diagonal row should be expressed as 1x(subnm)
-    Matt.print_me(); 
+    Matt.print_me();
 }
