@@ -9,11 +9,13 @@ using namespace std;
 class Matrix {
     int width, height;
     double* body;
+    double* keys;
 public:
     Matrix(int rows, int cols) {
         width = cols;
         height = rows;
         body = new double[width * height];
+        keys = new double[height];
     }
     double get_value(int rows, int cols) {
         return body[cols + rows * width];
@@ -41,12 +43,13 @@ public:
             for (int j = 0; j < width; j++) {
                 body[j + i * width] = body[j + i * width] / solver;
             }
+            keys[i] = body[(i * width) + i];
         }
     }
     //prints the solved-for (xn) keys
     void print_keys() {
         for (int i = 0; i < height; i++) {
-            cout << "x" << i + 1 << ":" << body[(i*width) + i] << endl;
+            cout << "x" << i + 1 << ":" << keys[i] << endl;
         }
     }
     //Performs the Gauss-Jacobi method on the matrix. 
@@ -63,13 +66,12 @@ public:
                     }
                 }
             }
-            body[(i * width) + i] = sum;
+            keys[i] = sum;
         }
         for (int i = 0; i < width-1; i++) {
-            double key = body[(i * width) + i];
             for (int j = i; j < width * height; j += width) {
-                if (j != (i * width) + 1) {
-                    body[j] *= key;
+                if (j != (i * width) + 1&&j!=0) {
+                    body[j] *= keys[i];
                 }
             }
         }
